@@ -104,6 +104,16 @@
   .badge.todo{background:var(--amberbg);color:var(--amber)}
   a.link{color:var(--navy2);font-size:11.5px;text-decoration:none;font-weight:600}
 
+  /* discover */
+  #discList .ti p{white-space:normal;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+  .disc-sec h4{margin:0 0 5px;font-size:10.5px;letter-spacing:.6px;text-transform:uppercase;color:var(--accent);font-weight:800}
+  .disc-sec ul{margin:0;padding-left:16px}
+  .disc-sec li{font-size:12.5px;color:var(--ink);line-height:1.5;margin-bottom:4px}
+  .curious{background:#eef3fb;border-left:3px solid var(--navy2);border-radius:10px;padding:10px 12px;font-size:12.5px;line-height:1.5;margin:12px 0}
+  .knownfor{margin-top:12px;background:linear-gradient(150deg,#fff5ef,#fdeaddc7);border-radius:12px;padding:11px 12px;font-size:12.5px;line-height:1.5}
+  .knownfor b,.curious b{color:var(--accent)}
+  .dest{cursor:pointer}
+
   /* map */
   #map{height:calc(100vh - 60px - 72px - env(safe-area-inset-bottom));width:100%}
   .maphint{position:absolute;z-index:500;left:50%;transform:translateX(-50%);bottom:84px;
@@ -161,13 +171,7 @@
       <div class="stat"><b>2</b><span>adults</span></div>
     </div>
 
-    <div class="sec"><h2>Booking progress</h2></div>
-    <div class="progcard">
-      <div class="ring" id="ring"><i id="ringTxt">0/0</i></div>
-      <div class="t"><b id="progB">Almost there</b><p id="progP">Most of the trip is locked in.</p></div>
-    </div>
-
-    <div class="sec"><h2>Destinations</h2><span class="small">swipe →</span></div>
+    <div class="sec"><h2>Destinations</h2><span class="small">tap → Discover</span></div>
     <div class="scroller" id="dests"></div>
 
     <div class="sec"><h2>The route</h2><span class="small">tap a day below</span></div>
@@ -210,6 +214,17 @@
     <div class="foot">Mont free-cancel ends 6 Jul · La&nbsp;Rochelle & Bayeux are non-refundable.</div>
   </section>
 
+  <!-- DISCOVER -->
+  <section id="discover" class="screen">
+    <div class="hero" style="padding-bottom:20px">
+      <div class="kicker">Know before you go</div>
+      <h1 style="font-size:27px">Discover</h1>
+      <div class="sub">History, curious facts, key sights & what each place is famous for. Tap to open.</div>
+    </div>
+    <div id="discList"></div>
+    <div class="foot">Curated & fact-checked · 12 destinations 🥖</div>
+  </section>
+
 </div>
 
 <!-- TAB BAR -->
@@ -220,6 +235,8 @@
     <svg viewBox="0 0 24 24"><path d="M9 3L3 6v15l6-3 6 3 6-3V3l-6 3-6-3z"/><path d="M9 3v15M15 6v15"/></svg>Map</button>
   <button class="tab" data-s="itinerary">
     <svg viewBox="0 0 24 24"><path d="M8 6h13M8 12h13M8 18h13"/><circle cx="3.5" cy="6" r="1.3"/><circle cx="3.5" cy="12" r="1.3"/><circle cx="3.5" cy="18" r="1.3"/></svg>Days</button>
+  <button class="tab" data-s="discover">
+    <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M14.5 9.5l-2 5-5 2 2-5z"/></svg>Discover</button>
   <button class="tab" data-s="bookings">
     <svg viewBox="0 0 24 24"><path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg>Bookings</button>
 </nav>
@@ -318,7 +335,7 @@ const DAYS = [
    {t:"11:00",n:"🛶 Marais Poitevin",d:"A punt-boat glide through the canals at Coulon"},
    {t:"16:00",n:"🐘 Nantes",d:"Evening in the lively Bouffay quarter"},
   ],
-  hotel:{n:"Nantes hotel",sub:"Mercure Grand Hôtel Centre (to book)",ok:false}},
+  hotel:{n:"Best Western Hotel Graslin",sub:"Nantes · 1 Rue Piron, Centre Ville",ok:true}},
 
  {n:9,date:"Sun 19 Jul",title:"Nantes → Lisbon",route:"The giant elephant & home",accent:"#9c2c2c",
   tags:["✈ TO7820 18:05→19:20","🐘 Final morning"],
@@ -340,7 +357,7 @@ const BOOKINGS = [
  {ic:"🛏️",t:"Cafe Hôtel du Théâtre",s:"Dinan old town",d:"15–16 Jul",ok:true,pr:"€75",cx:{txt:"Free until 13 Jul",cl:"free"}},
  {ic:"🛏️",t:"Le Saint-Nicolas",s:"La Rochelle · 2 nights",d:"16–18 Jul",ok:true,pr:"€266.61",cx:{txt:"Non-refundable",cl:"hard"}},
  {ic:"✈️",t:"Transavia TO7820",s:"NTE 18:05 → LIS 19:20 · ref KJEURH",d:"Sun 19 Jul",ok:true,pr:"paid",cx:null},
- {ic:"🛏️",t:"Nantes hotel",s:"Mercure Grand Hôtel Centre (suggested)",d:"18–19 Jul",ok:false,pr:"~€130",cx:null},
+ {ic:"🛏️",t:"Best Western Hotel Graslin",s:"Nantes · 1 Rue Piron, Centre Ville",d:"18–19 Jul",ok:true,pr:"€99.60",cx:{txt:"Non-refundable",cl:"hard"}},
  {ic:"🎟️",t:"Bayeux Tapestry tickets",s:"Timed entry · 09:00 slot",d:"13 Jul",ok:false,pr:"~€12pp",cx:null},
  {ic:"🛶",t:"Marais Poitevin punt",s:"Green Venice · Coulon",d:"18 Jul",ok:false,pr:"~€15pp",cx:null},
 ];
@@ -348,19 +365,13 @@ const BOOKINGS = [
 /* ---------- render overview ---------- */
 const dests=document.getElementById('dests');
 DESTS.forEach(d=>{dests.insertAdjacentHTML('beforeend',
- `<div class="dest"><div class="ph" style="background:linear-gradient(150deg,${d.c},${shade(d.c)})">${d.e}</div>
+ `<div class="dest" onclick="go('discover')"><div class="ph" style="background:linear-gradient(150deg,${d.c},${shade(d.c)})">${d.e}</div>
   <div class="body"><b>${d.n}</b><p>${d.d}</p></div></div>`);});
+function go(s){document.querySelector('.tab[data-s="'+s+'"]').click();}
 function shade(h){return h+"cc";}
 
 document.getElementById('routeMini').innerHTML =
  DAYS.map(d=>`<b style="color:${d.accent}">${d.date.split(' ').slice(0,2).join(' ')}</b> — ${d.title}`).join("<br>");
-
-/* booking ring */
-const okN=BOOKINGS.filter(b=>b.ok).length, tot=BOOKINGS.length, pct=Math.round(okN/tot*100);
-const ring=document.getElementById('ring');ring.style.setProperty('--p',pct);
-document.getElementById('ringTxt').textContent=okN+"/"+tot;
-document.getElementById('progB').textContent=okN+" of "+tot+" booked ("+pct+"%)";
-document.getElementById('progP').textContent="Still to lock: Nantes hotel, Tapestry tickets, Marais punt.";
 
 /* ---------- render days ---------- */
 const daysEl=document.getElementById('days');
@@ -395,6 +406,89 @@ function bkHTML(b){
 }
 document.getElementById('bkOk').innerHTML=BOOKINGS.filter(b=>b.ok).map(bkHTML).join("");
 document.getElementById('bkTodo').innerHTML=BOOKINGS.filter(b=>!b.ok).map(bkHTML).join("");
+
+/* ---------- discover ---------- */
+const DISC=[
+ {e:"🪨",c:"#2E5496",n:"Étretat",intro:"Cliffside fishing village on the Alabaster Coast, where chalk headlands plunge into the sea in giant arches and a lone rock 'needle'.",
+  history:["A humble fishing village until ~1850, when it became a fashionable resort drawing Parisian artists and writers.","Monet returned every year from 1883–86, painting 60+ canvases of these cliffs."],
+  curious:"Maupassant compared the Porte d'Aval arch to an elephant dipping its trunk into the sea — you can't unsee it.",
+  visit:["Porte d'Aval arch & the Aiguille ('Needle')","Porte d'Amont cliff","Clifftop Notre-Dame de la Garde chapel","The pebble beach & promenade"],
+  knownFor:"Impressionist painting (Monet, Boudin, Courbet) — and Maurice Leblanc's gentleman-thief Arsène Lupin, set at the Needle."},
+ {e:"⚓",c:"#3a7ca5",n:"Honfleur",intro:"A picture-perfect Norman port where tall slate-fronted houses lean over a 17th-century harbour painted countless times.",
+  history:["From this port Samuel de Champlain sailed in 1608 to found Québec City.","The Vieux Bassin harbour was built in 1681 on the order of Louis XIV's minister Colbert."],
+  curious:"Église Sainte-Catherine is France's largest wooden church — built by shipwrights, its twin naves look like upturned boat hulls.",
+  visit:["The Vieux Bassin (Old Harbour)","Église Sainte-Catherine & its detached bell tower","Eugène Boudin Museum","The old salt warehouses"],
+  knownFor:"A birthplace of Impressionism — home of painter Eugène Boudin (Monet's mentor) and of composer Erik Satie."},
+ {e:"🎖️",c:"#6b7a3a",n:"Bayeux",intro:"A handsome medieval town that escaped wartime ruin and guards the world's most famous embroidered chronicle.",
+  history:["The first town in mainland France liberated after D-Day, on 7 June 1944 — and it survived almost undamaged.","The Tapestry was likely commissioned in the 1070s by Bishop Odo, William the Conqueror's half-brother."],
+  curious:"The 'Bayeux Tapestry' isn't a tapestry — it's a 70-metre embroidery. The Nazis hid it in the Louvre and nearly shipped it to Berlin in 1944.",
+  visit:["The Bayeux Tapestry museum","Notre-Dame Cathedral","Bayeux War Cemetery","Medieval old town & watermill on the Aure"],
+  knownFor:"The 11th-century Bayeux Tapestry of the 1066 Norman Conquest — and, historically, Bayeux lace."},
+ {e:"🪖",c:"#7a6a45",n:"D-Day Beaches",intro:"The Normandy shore where history's largest seaborne invasion landed on 6 June 1944 — cliffs, cemeteries and the bones of a man-made harbour.",
+  history:["At Pointe du Hoc, US Rangers scaled 30-metre cliffs only to find the German guns already moved inland.","'Bloody Omaha' cost some 2,400 American casualties in a single day."],
+  curious:"At Arromanches the Allies towed in a prefab 'Mulberry' harbour nicknamed Port Winston — built to last 3 months, it served 10.",
+  visit:["Pointe du Hoc's cratered clifftop","Omaha Beach","Normandy American Cemetery, Colleville (9,387 graves)","Arromanches & its Mulberry caissons"],
+  knownFor:"The D-Day landings and Battle of Normandy — the pilgrimage ground of WWII remembrance."},
+ {e:"🏰",c:"#7d5ba6",n:"Mont Saint-Michel",intro:"A soaring Gothic abbey crowning a rocky islet that the sea encircles and abandons twice a day.",
+  history:["Founded in 708 when, by legend, the Archangel Michael appeared to Bishop Aubert of Avranches.","A great medieval pilgrimage site; a UNESCO World Heritage Site since 1979."],
+  curious:"Locals warn the tides rush in 'as fast as a galloping horse' (~a metre a minute) across sands that hide quicksand.",
+  visit:["The abbey church & cloister","Medieval ramparts & the Grande Rue","The bay at high and low tide","The new footbridge"],
+  knownFor:"Its tidal-island abbey — and the airy soufflé omelette of La Mère Poulard, served to pilgrims since the 1880s."},
+ {e:"🦪",c:"#2a9d8f",n:"Cancale",intro:"A salt-sprayed fishing port on the bay whose entire identity is built around one shimmering mollusc: the oyster.",
+  history:["Named official supplier of oysters to the French royal table — Louis XIV had them rushed to Versailles by the cartload.","Romans prized oysters from these wild beds some 2,000 years ago."],
+  curious:"Buy oysters from the quayside market by the lighthouse, eat them on the sea wall, and toss the empty shells onto the beach below.",
+  visit:["The oyster market & Pointe du Hock viewpoint","The working harbour (Port de la Houle)","Seafront seafood restaurants","Views across to Mont Saint-Michel"],
+  knownFor:"Cancale oysters — France's 'oyster capital', with vast tidal beds yielding thousands of tons a year."},
+ {e:"🏴‍☠️",c:"#36648b",n:"Saint-Malo",intro:"A granite walled city rising straight from the sea, swaggering with the ghosts of the corsairs who made it rich.",
+  history:["The 'Cité Corsaire' sent royally-licensed privateers (Duguay-Trouin, Surcouf) to plunder enemy ships for centuries.","Its navigator Jacques Cartier sailed from here in 1534 and claimed Canada for France."],
+  curious:"The bay has some of Europe's highest tides (~13 m) — walk out to island forts at low water, then get marooned when the sea rushes back.",
+  visit:["The ramparts walk","Grand Bé island & Chateaubriand's tomb","The corsair mansion (Hôtel Magon)","The malouinière mansions"],
+  knownFor:"Corsair heritage and the malouinières — grand mansions built by privateers flush with sea-raid fortunes."},
+ {e:"🏘️",c:"#b5651d",n:"Dinan",intro:"A perfectly preserved medieval town of timber-framed houses tumbling down a cobbled hill to a tranquil river port.",
+  history:["The steep Rue du Jerzual linked the upper town to the Rance port for ten centuries, thronged with weavers and tanners.","The heart of Breton knight Bertrand du Guesclin rests in the Basilique Saint-Sauveur."],
+  curious:"Du Guesclin's body was so prized after his death in 1380 that it was split and buried in four places — only his heart made it home to Dinan.",
+  visit:["Rue du Jerzual & the riverside port","The 14th-c castle & 3 km of ramparts","The Tour de l'Horloge clock tower","Basilique Saint-Sauveur"],
+  knownFor:"Artisan workshops — glass-blowers, wood-gilders and craftspeople — lining the medieval Rue du Jerzual."},
+ {e:"⛵",c:"#1d7874",n:"La Rochelle",intro:"A luminous Atlantic port where three medieval towers still guard a yacht-filled harbour ringed by arcaded streets.",
+  history:["A defiant Huguenot stronghold that declared itself a republic before Richelieu's brutal 1627–28 siege starved it from ~27,000 to ~5,000.","The Saint-Nicolas & Chain towers once stretched a giant iron chain between them each night to seal the Old Port."],
+  curious:"The Lantern Tower — the Atlantic coast's oldest lighthouse — holds 600+ graffiti carved by prisoners once held there.",
+  visit:["The three harbour towers","The arcaded old town","The Aquarium","Vieux-Port at dusk"],
+  knownFor:"Maritime heritage and one of Europe's top aquariums (12,000 animals + a sea-turtle rescue centre)."},
+ {e:"🏝️",c:"#e09f3e",n:"Île de Ré",intro:"A flat, whitewashed, hollyhock-draped island of salt marshes and bike paths, linked to the mainland by a soaring 3 km bridge.",
+  history:["Salt-making here dates to the Middle Ages and, after near-collapse, has revived to ~30 producers today.","Star-shaped Fort la Prée (1625) is the island's oldest fort, from when England's Buckingham besieged the island."],
+  curious:"Marsh donkeys were once dressed in cloth 'trousers' to shield their legs from biting mosquitoes — a quirk now revived for tourists.",
+  visit:["Saint-Martin-de-Ré harbour & Vauban ramparts","The salt marshes","110 km of cycle paths","Phare des Baleines lighthouse"],
+  knownFor:"Hand-harvested fleur de sel, oysters, 'donkeys in trousers', and cycling."},
+ {e:"🛶",c:"#52796f",n:"Marais Poitevin",intro:"A hushed, emerald labyrinth of tree-shaded canals best explored gliding along in a flat-bottomed boat.",
+  history:["The drainage canals were first dug by Benedictine monks in the 10th–13th centuries, reclaiming the former Gulf of the Pictons.","The 'Green Venice' nickname stuck by the 19th century; it became a Regional Natural Park in 1979."],
+  curious:"The traditional flat-bottomed barques were once so stable they ferried cattle between waterside meadows.",
+  visit:["A guided barque trip from a village embarcadère","Coulon, the marsh's 'capital'","Cycling or canoeing the wet marsh","The abundant birdlife"],
+  knownFor:"Its punted flat-bottomed barques and a patchwork of duckweed-green canals and poplar-lined islets."},
+ {e:"🐘",c:"#9c2c2c",n:"Nantes",intro:"A reinvented Loire-side former ducal capital where giant mechanical creatures roam an island and art spills through the streets.",
+  history:["The Château des Ducs de Bretagne was the seat of Brittany's last dukes, including Anne of Brittany, twice Queen of France.","France's biggest 18th-c slave-trading port, Nantes now confronts that past with a Memorial to the Abolition of Slavery on the quay."],
+  curious:"Jules Verne, born here in 1828, reputedly drew his seafaring imagination from the tall ships crowding the city's quays.",
+  visit:["Les Machines de l'Île (the Great Elephant)","Château des Ducs de Bretagne","Jules Verne Museum","Le Lieu Unique (old LU biscuit factory)"],
+  knownFor:"Les Machines de l'Île, LU 'Petit Beurre' biscuits, and crisp Muscadet white wine."},
+];
+const discList=document.getElementById('discList');
+DISC.forEach(p=>{
+  const hist=p.history.map(h=>`<li>${h}</li>`).join("");
+  const vis=p.visit.map(v=>`<li>${v}</li>`).join("");
+  discList.insertAdjacentHTML('beforeend',
+   `<div class="day" style="border-left-color:${p.c}">
+     <div class="head" onclick="this.parentNode.classList.toggle('open')">
+       <div class="daynum" style="background:linear-gradient(150deg,${p.c},${shade(p.c)});border-radius:50%;font-size:20px">${p.e}</div>
+       <div class="ti"><b>${p.n}</b><p>${p.intro}</p></div>
+       <div class="chev">▶</div>
+     </div>
+     <div class="body"><div class="inner">
+       <div class="disc-sec"><h4>📜 History</h4><ul>${hist}</ul></div>
+       <div class="curious">💡 <b>Did you know?</b> ${p.curious}</div>
+       <div class="disc-sec"><h4>📍 Don't miss</h4><ul>${vis}</ul></div>
+       <div class="knownfor">🎨 <b>Known for:</b> ${p.knownFor}</div>
+     </div></div>
+   </div>`);
+});
 
 /* ---------- countdown ---------- */
 function tick(){
