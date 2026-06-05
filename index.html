@@ -35,7 +35,10 @@
   .kicker{font-size:11px;letter-spacing:2.5px;text-transform:uppercase;opacity:.8;font-weight:700}
   .hero h1{font-size:34px;margin:6px 0 2px;font-weight:800;letter-spacing:-.5px}
   .hero .sub{opacity:.82;font-size:13.5px;line-height:1.5;max-width:300px}
-  .countdown{display:flex;gap:8px;margin-top:18px}
+  .datepill{display:inline-block;margin:11px 0 9px;background:rgba(255,255,255,.16);border:1px solid rgba(255,255,255,.24);
+    padding:5px 13px;border-radius:30px;font-size:11.5px;font-weight:700;letter-spacing:.3px}
+  .cdlabel{font-size:10px;opacity:.82;font-weight:700;letter-spacing:1px;margin:6px 0 8px;text-transform:uppercase}
+  .countdown{display:flex;gap:8px;margin-top:0}
   .cd{background:rgba(255,255,255,.14);backdrop-filter:blur(6px);border-radius:14px;
     padding:10px 0;flex:1;text-align:center;border:1px solid rgba(255,255,255,.16)}
   .cd b{display:block;font-size:23px;font-weight:800;line-height:1}
@@ -43,7 +46,8 @@
 
   .stats{display:flex;gap:10px;margin:16px 16px 0}
   .stat{flex:1;background:var(--card);border-radius:16px;padding:13px 10px;text-align:center;box-shadow:var(--shadow)}
-  .stat b{display:block;font-size:20px;color:var(--navy);font-weight:800}
+  .stat em{display:block;font-size:17px;font-style:normal;line-height:1;margin-bottom:3px}
+  .stat b{display:block;font-size:19px;color:var(--navy);font-weight:800;line-height:1}
   .stat span{font-size:10.5px;color:var(--muted);letter-spacing:.3px}
 
   .sec{margin:24px 16px 8px;display:flex;align-items:center;justify-content:space-between}
@@ -67,6 +71,20 @@
   .dest .ph{height:78px;display:grid;place-items:center;font-size:34px;color:#fff}
   .dest .body{padding:10px 12px}
   .dest .body b{font-size:13.5px}.dest .body p{margin:3px 0 0;font-size:11px;color:var(--muted);line-height:1.4}
+
+  /* journey timeline */
+  .route{margin:10px 16px 4px;position:relative}
+  .route:before{content:"";position:absolute;left:17px;top:26px;bottom:26px;width:2px;
+    background:linear-gradient(var(--navy2),var(--accent));opacity:.22;border-radius:2px}
+  .rstop{display:flex;align-items:center;gap:13px;padding:7px 0;position:relative;cursor:pointer}
+  .rstop:active{opacity:.55}
+  .rnode{width:36px;height:36px;border-radius:50%;flex:none;display:grid;place-items:center;color:#fff;
+    font-weight:800;font-size:14px;border:3px solid var(--bg);box-shadow:0 2px 6px rgba(0,0,0,.18);position:relative;z-index:1}
+  .rcontent{flex:1;min-width:0}
+  .rdate{font-size:10px;color:var(--muted);font-weight:700;letter-spacing:.4px;text-transform:uppercase}
+  .rtitle{font-size:13.5px;font-weight:700;margin-top:1px;line-height:1.25}
+  .rsub{font-size:11px;color:var(--muted);margin-top:2px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+  .rgo{color:#c8ced8;font-size:20px;flex:none;font-weight:700}
 
   /* day cards */
   .day{margin:12px 16px;background:var(--card);border-radius:20px;box-shadow:var(--shadow);overflow:hidden;
@@ -155,29 +173,30 @@
     <div class="hero">
       <div class="kicker">Road Trip · Western France</div>
       <h1>France 2026 🇫🇷</h1>
-      <div class="sub">Normandy cliffs, D-Day beaches, the Mont, Brittany & the Atlantic coast — 11–19 July.</div>
+      <div class="datepill">📅 11–19 July 2026 · 9 days</div>
+      <div class="sub">Normandy cliffs, D-Day beaches, the Mont, Brittany & the Atlantic coast.</div>
+      <div class="cdlabel">✈ Countdown to take-off</div>
       <div class="countdown" id="cd">
         <div class="cd"><b id="cdD">–</b><span>Days</span></div>
         <div class="cd"><b id="cdH">–</b><span>Hours</span></div>
         <div class="cd"><b id="cdM">–</b><span>Mins</span></div>
-        <div class="cd"><b>9</b><span>Days trip</span></div>
       </div>
     </div>
 
     <div class="stats">
-      <div class="stat"><b>8</b><span>nights</span></div>
-      <div class="stat"><b>~1,200</b><span>km</span></div>
-      <div class="stat"><b>11</b><span>stops</span></div>
-      <div class="stat"><b>2</b><span>adults</span></div>
+      <div class="stat"><em>🌙</em><b>8</b><span>nights</span></div>
+      <div class="stat"><em>🚗</em><b>1,200</b><span>km</span></div>
+      <div class="stat"><em>📍</em><b>12</b><span>places</span></div>
+      <div class="stat"><em>👥</em><b>2</b><span>adults</span></div>
     </div>
 
-    <div class="sec"><h2>Destinations</h2><span class="small">tap → Discover</span></div>
+    <div class="sec"><h2>Where you'll go</h2><span class="small">tap → Discover</span></div>
     <div class="scroller" id="dests"></div>
 
-    <div class="sec"><h2>The route</h2><span class="small">tap a day below</span></div>
-    <div id="routeMini" style="margin:4px 16px 0;font-size:12.5px;color:var(--muted);line-height:1.7"></div>
+    <div class="sec"><h2>Your journey</h2><span class="small">tap to open a day</span></div>
+    <div class="route" id="route"></div>
 
-    <div class="foot">Made by your travel agent · open the <b>Map</b> & <b>Days</b> tabs below 👇</div>
+    <div class="foot">Tap any stop for its full plan · explore the <b>Map</b> & <b>Discover</b> tabs below 👇</div>
   </section>
 
   <!-- MAP -->
@@ -370,8 +389,26 @@ DESTS.forEach(d=>{dests.insertAdjacentHTML('beforeend',
 function go(s){document.querySelector('.tab[data-s="'+s+'"]').click();}
 function shade(h){return h+"cc";}
 
-document.getElementById('routeMini').innerHTML =
- DAYS.map(d=>`<b style="color:${d.accent}">${d.date.split(' ').slice(0,2).join(' ')}</b> — ${d.title}`).join("<br>");
+const routeEl=document.getElementById('route');
+DAYS.forEach(d=>{
+  const sleep=d.hotel?`🛏 ${d.hotel.n}`:`🏠 Fly home to Lisbon`;
+  routeEl.insertAdjacentHTML('beforeend',
+   `<div class="rstop" onclick="goDay(${d.n})">
+     <div class="rnode" style="background:linear-gradient(150deg,${d.accent},${shade(d.accent)})">${d.n}</div>
+     <div class="rcontent">
+       <div class="rdate">${d.date}</div>
+       <div class="rtitle">${d.title}</div>
+       <div class="rsub">${sleep}</div>
+     </div>
+     <div class="rgo">›</div>
+   </div>`);
+});
+function goDay(n){
+  go('itinerary');
+  const c=document.getElementById('dayCard-'+n);
+  document.querySelectorAll('#days .day.open').forEach(x=>x.classList.remove('open'));
+  if(c){c.classList.add('open');setTimeout(()=>c.scrollIntoView({behavior:'smooth',block:'start'}),140);}
+}
 
 /* ---------- render days ---------- */
 const daysEl=document.getElementById('days');
@@ -382,7 +419,7 @@ DAYS.forEach(d=>{
      <span class="badge ${d.hotel.ok?'ok':'todo'}">${d.hotel.ok?'BOOKED':'TO BOOK'}</span></div>`
     :`<div class="sleep"><div class="ic">🏠</div><div class="t"><b>Fly home</b><p>Trip ends — Lisbon by 19:20</p></div></div>`;
   daysEl.insertAdjacentHTML('beforeend',
-   `<div class="day" style="border-left-color:${d.accent}">
+   `<div class="day" id="dayCard-${d.n}" style="border-left-color:${d.accent}">
      <div class="head" onclick="this.parentNode.classList.toggle('open')">
        <div class="daynum" style="background:linear-gradient(150deg,${d.accent},${shade(d.accent)})"><b>${d.n}</b><span>DAY</span></div>
        <div class="ti"><b>${d.title}</b><p>${d.date} · ${d.route}</p></div>
